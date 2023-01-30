@@ -151,18 +151,35 @@ void PrintMatriceDynData2(MatriceDynData_t data)
 
 void PrintMatriceDynData3(MatriceDynData_t data)
 {
-    Main_S (*matrix_ptr)[data.maxJ];
-    matrix_ptr = (Main_S (*)[data.maxJ])(data.matr);
     printf("%s: \n", __func__);
+    Main_S (*matrix)[data.maxJ];
+    matrix = (Main_S (*)[data.maxJ])(data.matr);
+    printf("sizeof(matrix) = %lu\n", sizeof(matrix));
+    printf("sizeof(*matrix) = %lu\n", sizeof(*matrix));
     for (size_t i=0;i<data.maxI;i++)
     {
         for (size_t j=0;j<data.maxJ;j++){
             printf("matr[%ld][%ld] = ", i, j);
-            PrintMain((Main_S *)&(matrix_ptr[i][j]));
+            PrintMain(&(matrix[i][j]));
         }
     }
 }
-
+///*
+void PrintMatriceDynData4(MatriceDynData_t data)
+{
+    printf("%s: \n", __func__);
+    Main_S **matrix;
+    matrix = (Main_S**)(data.matr);
+    printf("sizeof(matrix) = %lu\n", sizeof(matrix));
+    printf("sizeof(*matrix) = %lu\n", sizeof(*matrix));
+    for (size_t i=0;i<data.maxI;i++) {
+        for (size_t j=0;j<data.maxJ;j++) {
+            printf("matr[%ld][%ld] = ", i, j);
+            PrintMain((Main_S *)&((matrix)[i][j]));
+        }
+    }
+}
+//*/
 MatriceDyn* AllocateMatriceDyn(size_t i, size_t j)
 {
     printf("%s\n", __func__);
@@ -226,6 +243,7 @@ void TestMatriceDynData()
         PrintMatriceDynData1(data);
         PrintMatriceDynData2(data);
         PrintMatriceDynData3(data);
+        PrintMatriceDynData4(data);
         FreeMatriceDyn(data.matr);
     }
     else
