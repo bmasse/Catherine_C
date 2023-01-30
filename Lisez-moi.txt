@@ -1,0 +1,6 @@
+Bonjour Catherine
+
+2023-01-30
+Répertoire MatriceManipulation
+Manipulation des matrice en c. Exemples: d'initialisation, d'adressage, d'allocation dynamique ...
+
